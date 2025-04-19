@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Image Button</title>
+    <style>
+        .image-button {
+            width: 120px;
+            height: 120px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button class="image-button" onclick="toggleImage()">
+        <img id="toggleImg" src="images/Action.png" width="120" height="120" />
+    </button>
+
+    <script>
+        let toggleState = false;
+
+        // Ensure the initial image is loaded immediately
+        window.onload = function() {
+            const img = document.getElementById("toggleImg");
+            img.src = "images/UsedDeathAction.png"; // The default image that shows up
+        };
+
+        function toggleImage() {
+            const img = document.getElementById("toggleImg");
+            if (toggleState) {
+                img.src = "images/UsedDeathAction.png"; // First image
+            } else {
+                img.src = "images/DeathAction.png"; // Second image
+            }
+            toggleState = !toggleState;
+        }
+    </script>
+</body>
+</html>
