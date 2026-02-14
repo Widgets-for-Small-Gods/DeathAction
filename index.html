@@ -31,7 +31,7 @@
     /* Action buttons row */
     .button-row {
         display: flex;
-        gap: 10px;
+        gap: 20px;
         align-items: center;
     }
 
@@ -89,7 +89,6 @@
         <div class="controls">
             <button class="control-btn" onclick="addButton()">+</button>
             <button class="control-btn" onclick="removeButton()">−</button>
-            <button class="control-btn" onclick="resetButtons()">↺</button>
         </div>
 
     </div>
@@ -136,12 +135,6 @@
         const row = document.getElementById("buttonRow");
         const btnObj = buttons.pop();
         row.removeChild(btnObj.button);
-    }
-
-    function resetButtons() {
-        buttons.forEach(b => {
-            b.img.src = "images/DeathAction.png";
-        });
     }
 
     /* Default = 1 buttons */
