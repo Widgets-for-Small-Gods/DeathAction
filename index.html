@@ -1,42 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toggle Image Button</title>
-    <style>
-        .image-button {
-            width: 100px;
-            height: 100px;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <button class="image-button" onclick="toggleImage()">
-        <img id="toggleImg" src="images/Action.png" width="100" height="100" />
-    </button>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Action Button Widget</title>
 
-    <script>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        font-family: sans-serif;
+    }
+
+    /* Widget container */
+    .widget {
+        width: 500px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Buttons + controls grouped together */
+    .button-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Action buttons row */
+    .button-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    /* Action buttons */
+    .image-button {
+        width: 100px;
+        height: 100px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .image-button img {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Controls stacked vertically */
+    .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    /* Half-size control buttons */
+    .control-btn {
+        width: 15px;
+        height: 15px;
+        font-size: 10px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        background: black;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        line-height: 1;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="widget">
+
+    <div class="button-group">
+
+        <!-- Action buttons -->
+        <div class="button-row" id="buttonRow"></div>
+
+        <!-- Controls always beside last button -->
+        <div class="controls">
+            <button class="control-btn" onclick="addButton()">+</button>
+            <button class="control-btn" onclick="removeButton()">−</button>
+            <button class="control-btn" onclick="resetButtons()">↺</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    const maxButtons = 4;
+    let buttons = [];
+
+    function createButton() {
+        const button = document.createElement("button");
+        button.className = "image-button";
+
+        const img = document.createElement("img");
+        img.src = "images/DeathAction.png";
+
         let toggleState = false;
 
-        // Ensure the initial image is loaded immediately
-        window.onload = function() {
-            const img = document.getElementById("toggleImg");
-            img.src = "images/UsedDeathAction.png"; // The default image that shows up
+        button.onclick = () => {
+            img.src = toggleState
+                ? "images/DeathAction.png"
+                : "images/UsedDeathAction.png";
+            toggleState = !toggleState;
         };
 
-        function toggleImage() {
-            const img = document.getElementById("toggleImg");
-            if (toggleState) {
-                img.src = "images/UsedDeathAction.png"; // First image
-            } else {
-                img.src = "images/DeathAction.png"; // Second image
-            }
-            toggleState = !toggleState;
-        }
-    </script>
+        button.appendChild(img);
+        return { button, img };
+    }
+
+    function addButton() {
+        if (buttons.length >= maxButtons) return;
+
+        const row = document.getElementById("buttonRow");
+        const btnObj = createButton();
+
+        buttons.push(btnObj);
+        row.appendChild(btnObj.button);
+    }
+
+    function removeButton() {
+        if (buttons.length === 0) return;
+
+        const row = document.getElementById("buttonRow");
+        const btnObj = buttons.pop();
+        row.removeChild(btnObj.button);
+    }
+
+    function resetButtons() {
+        buttons.forEach(b => {
+            b.img.src = "images/DeathAction.png";
+        });
+    }
+
+    /* Default = 1 buttons */
+    window.onload = () => {
+        addButton();
+    };
+</script>
+
 </body>
 </html>
